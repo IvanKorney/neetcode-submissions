@@ -1,9 +1,12 @@
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        sobj = {}
-        for i in strs:
-            sorted_string = "".join(sorted(i))
-            if sorted_string not in sobj:
-                sobj[sorted_string] = []
-            sobj[sorted_string].append(i)
-        return list(sobj.values())
+        obj = {}
+
+        for s in strs:
+            sorted_string = "".join(sorted(s))
+            if sorted_string not in obj:
+                obj[sorted_string] = []
+            
+            obj[sorted_string].append(s)
+        
+        return list(obj.values())
