@@ -1,22 +1,27 @@
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
+        dirs = [(0,1),(0,-1),(1,0),(-1,0)]
         rows, cols = len(board), len(board[0])
-        visited = set()
-
-        def dfs(r,c,i):
-            if i == len(word):
+        vis = set()
+        n = len(word)
+        def bt(i,r,c):
+            if i == n:
                 return True
-            if r not in range(rows) or c not in range(cols) or (r,c) in visited or board[r][c] != word[i]:
+            if r not in range(rows) or c not in range(cols) or (r,c) in vis or board[r][c] != word[i]:
                 return False
-            visited.add((r,c))
-            res = dfs(r+1,c,i+1) or dfs(r-1,c,i+1) or dfs(r,c+1,i+1) or dfs(r,c-1,i+1) 
-            visited.remove((r,c))
-            return res
-
-
+            d = False
+            vis.add((r,c))
+            for dr,dc in dirs:
+                row, col = r+dr, c+dc
+                d = d or bt(i+1,row,col)
+            vis.remove((r,c))
+            return d
+            
         for r in range(rows):
             for c in range(cols):
-                if dfs(r,c,0):
+                if board[r][c] == word[0] and bt(0,r,c):
                     return True
-        
         return False
+
+
+
